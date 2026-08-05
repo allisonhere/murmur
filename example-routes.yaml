@@ -1,0 +1,53 @@
+# Deterministic routing rules.
+#
+# Copy this to ~/.config/murmur/routes.yaml. The file is optional: Murmur works
+# fine with no rules, falling back to weighted vault ranking.
+#
+# Rules run after explicit hints (@project, #type, >path) and before ranking.
+# The first rule with a `note` that matches wins.
+#
+# A rule matches when:
+#   - any of its `keywords` appears anywhere in the thought (case-insensitive), and
+#   - its `type` matches the classified content type, if `type` is set.
+#
+# Rules with `fallback_note` instead of `note` are only consulted when nothing
+# else produced a destination.
+#
+# Paths and sections support {{date}}, {{year}}, {{month}}, {{day}}, {{time}}
+# and {{weekday}}.
+
+routes:
+  # Send anything about the laptop straight to its troubleshooting section.
+  - keywords:
+      - z13
+      - rog flow
+      - hid_asus
+    note: Projects/Linux/ROG Flow Z13.md
+    section: Trackpad troubleshooting
+
+  # Project keywords with no fixed section: Murmur picks the best heading.
+  - keywords:
+      - tidemail
+    note: Projects/Tidemail.md
+    tags:
+      - tui
+
+  # Type-only rules apply to every thought of that kind.
+  - type: journal
+    note: Daily/{{date}}.md
+
+  # Keyword plus type: only tasks mentioning these words are routed here.
+  - keywords:
+      - buy
+      - order
+      - renew
+    type: task
+    note: Inbox/Errands.md
+    section: Shopping
+
+  # Consulted last, only if nothing above matched.
+  - type: task
+    fallback_note: Inbox/Tasks.md
+
+  - type: idea
+    fallback_note: Inbox/Ideas.md

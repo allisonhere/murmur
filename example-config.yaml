@@ -1,0 +1,71 @@
+# Murmur configuration.
+#
+# Copy this to ~/.config/murmur/config.yaml (or $XDG_CONFIG_HOME/murmur/config.yaml)
+# and edit it, or just run `murmur` once and let the setup screen write it for you.
+#
+# Secrets are never stored in this file. The AI section names an environment
+# variable to read the API key from instead.
+
+# The only required setting: where your Obsidian vault lives.
+vault_path: /home/allie/Documents/Obsidian Vault
+
+# Used to build obsidian:// links. Defaults to the last path component above.
+vault_name: Obsidian Vault
+
+# Where thoughts land when nothing better matches.
+default_inbox: Inbox.md
+default_task_note: Inbox/Tasks.md
+
+# Daily notes. Supports {{date}}, {{year}}, {{month}}, {{day}}, {{time}}
+# and {{weekday}}.
+daily_note_path: Daily/{{date}}.md
+
+# Optional. Used only when Murmur has to create a daily note that does not
+# exist yet. The path is relative to the vault (an absolute path also works).
+daily_template_path: Templates/Daily.md
+
+# Go time layouts. "2006-01-02" is an ISO date; "15:04" is a 24-hour clock.
+date_format: "2006-01-02"
+time_format: "15:04"
+
+# `murmur --quick` saves without confirmation only at or above this confidence
+# (or when you gave an explicit destination). Raise it to be asked more often.
+quick_mode_confidence: 0.90
+
+# Directories and globs the indexer skips. Hidden directories, .obsidian and
+# anything named "trash" are always skipped.
+excluded_paths:
+  - .obsidian
+  - .git
+  - Templates
+  - Attachments
+
+# Which heading each kind of capture goes under inside a daily note.
+daily_sections:
+  journal: Journal
+  tasks: Tasks
+  notes: Notes
+
+# Optional AI assistance. Murmur is fully usable with provider "none": that is
+# the default and nothing ever leaves your machine.
+#
+#   none    deterministic routing only
+#   ollama  a local Ollama server (base_url defaults to http://localhost:11434)
+#   openai  any OpenAI-compatible /chat/completions endpoint
+#
+# Only the thought and metadata for a handful of candidate notes are ever sent.
+# Your vault is never uploaded.
+ai:
+  provider: none
+  model: ""
+  base_url: ""
+  api_key_env: MURMUR_API_KEY
+  timeout_seconds: 20
+
+formatting:
+  # Add "- Added: YYYY-MM-DD" under new tasks.
+  include_capture_date: true
+  # Render ideas as "> [!idea]" callouts rather than plain bullets.
+  use_callouts_for_ideas: true
+  # The property name used for the capture date on tasks.
+  task_date_property: Added
