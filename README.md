@@ -56,17 +56,26 @@ pure-Go SQLite driver requires it) and has no cgo dependency, so
 `CGO_ENABLED=0` works.
 
 ```bash
-go install github.com/alliebayless/murmur@latest
+go install github.com/allisonhere/murmur@latest
+```
+
+Or with the install script, which builds from source and installs to
+`~/.local/bin` (falling back to `/usr/local/bin` via `sudo`):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/allisonhere/murmur/main/install.sh | bash
 ```
 
 Or from a clone:
 
 ```bash
-git clone https://github.com/alliebayless/murmur
+git clone https://github.com/allisonhere/murmur
 cd murmur
 go build -o murmur .
 sudo install -m 0755 murmur /usr/local/bin/murmur
 ```
+
+Run `./install.sh --help` from a clone for options (`--prefix`, `--ref`).
 
 ## First run
 
